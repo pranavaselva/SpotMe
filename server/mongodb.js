@@ -14,5 +14,4 @@ function dataBaseConnection() {
 }
 
 module.exports = dataBaseConnection
-console.log("Connecting to:", process.env.DATABASE_URL);
-
+// console.log("Connecting to:", process.env.DATABASE_URL);
