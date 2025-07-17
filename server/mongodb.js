@@ -13,6 +13,7 @@ function dataBaseConnection() {
     })
 }
 
+
 const userSchema = new mongoose.Schema({
     Name: String,
     Age: Number,
