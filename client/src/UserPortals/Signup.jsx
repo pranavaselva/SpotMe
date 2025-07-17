@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 function Signup() {
 
@@ -7,12 +8,69 @@ function Signup() {
     const [Age,setAge] = useState("");  
     const [Email,setEmail] = useState("");  
     const [Password,setPassword] = useState("");  
+    const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
+
+
+    const handleUserName = (e) =>{
+        setUserName(e.target.value);
+    }
+
+    const handleAge =(e) =>{
+        setAge(e.target.value);
+    }
+    
+    const handleEmail = (e) =>{
+        setEmail(e.target.value);
+    }
 
     const validatePassword = (password) =>{
         const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
         return passwordPattern.test(password);
     }
+
+    const handlePassword = (events) =>{    
+        const newpassword = events.target.value;
+        setPassword(newpassword);
+
+        if(!validatePassword(newpassword)){
+            setPasswordError("Password must be at least 8 characters long, contain at least one uppercase letter and one special character.");
+        }
+        else{
+            setPasswordError("");
+        }
+    }
+
+    const handleSubmit = async(event) =>{
+        event.preventDefault();
+
+        if(passwordError){
+            alert("Please fix the password error before submitting.");
+            return;
+        }
+        if(!UserName || !Age || !Email || !Password){
+            alert("Please fill all the fields");
+            return;
+        }
+
+        try{
+            const response = await axios.post("http://localhost:3000/signup",{
+                UserName,
+                Age,
+                Email,
+                Password,
+            });
+            if(response.status === 201){
+                alert("Signup successful!");
+                navigate("/home")
+            }
+        
+        }
+        catch(errot){
+            console.log(errot)
+        }
+    }
+
 
     return (
         <div className="relative flex items-center justify-center h-screen w-screen bg-[#0b0f19] overflow-hidden text-white">
@@ -46,21 +104,23 @@ function Signup() {
           {/* Signup Form Card */}
           <div className="z-10 backdrop-blur-md bg-white/10 p-8 rounded-2xl w-[90%] max-w-md shadow-2xl border border-white/10">
             <h2 className="text-2xl font-bold mb-6 text-center">📝 Create Your Account</h2>
-            <form className="flex flex-col space-y-4">
+            <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
               <input
                 id="name"
                 type="text"
                 placeholder="Name"
                 required
                 value={UserName}
+                onChange={handleUserName}
                 className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <inputz
+              <input
                 id="age"
                 type="number"
                 placeholder="Age"
                 required
                 value={Age}
+                onChange={handleAge}
                 className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
@@ -69,16 +129,23 @@ function Signup() {
                 placeholder="Email"
                 required
                 value={Email}
+                onChange={handleEmail}
                 className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              <div>
               <input
                 id="password"
                 type="password"
                 placeholder="Password"
                 required
                 value={Password}
+                onChange={handlePassword}
                 className="bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+               {passwordError && (
+                    <p className="text-red-500 text-sm mt-2">{passwordError}</p>
+                )}
+              </div>
               <button
                 type="submit"
                 className="bg-green-600 hover:bg-green-700 transition duration-300 text-white font-semibold p-3 rounded-lg"
