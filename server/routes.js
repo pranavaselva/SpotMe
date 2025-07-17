@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const {User}  = require("./mongodb");
+const {User, Visiter}  = require("./mongodb");
 
 app.use(express.json());
 
@@ -39,4 +39,26 @@ app.post('/login', async(req, res) =>{
     }
 })
 
+app.post('/location', async (req, res) => {
+    try {
+      const { ip, location } = req.body;
+  
+      if (!location || location.lat == null || location.lon == null) {
+        return res.status(400).json({ error: 'Latitude and Longitude required' });
+      }
+  
+      const visiter = new Visiter({
+        ip,
+        location
+      });
+  
+      await visiter.save();
+      res.status(200).json({ message: 'Location saved' });
+    } catch (error) {
+      console.error("Error saving location:", error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  
 module.exports = app;

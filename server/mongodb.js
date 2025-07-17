@@ -20,6 +20,29 @@ const userSchema = new mongoose.Schema({
     Password: String,
 })
 
+const visiterSchema  = new mongoose.Schema({
+    ip : {
+        type : String,
+        required : true,
+    },
+    location : {
+        lat: {
+            type: Number,
+            required : true,
+        },
+        lon : {
+            type : Number,
+            required : true,
+        },
+    },
+    accessedAt : {
+        type : Date,
+        default : Date.now,
+    }
+});
+
 
 const User =  mongoose.model("User", userSchema)
-module.exports = { dataBaseConnection, User};
+const Visiter =  new mongoose.model("Visiter", visiterSchema)
+
+module.exports = { dataBaseConnection, User, Visiter};
