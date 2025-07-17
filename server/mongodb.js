@@ -13,6 +13,13 @@ function dataBaseConnection() {
     })
 }
 
-module.exports = dataBaseConnection
-console.log("Connecting to:", process.env.DATABASE_URL);
+const userSchema = new mongoose.Schema({
+    Name: String,
+    Age: Number,
+    Email: String,
+    Password: String,
+})
 
+
+const User = mongoose.model("User", userSchema)
+module.exports = { dataBaseConnection, User};
