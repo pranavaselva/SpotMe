@@ -60,5 +60,24 @@ app.post('/location', async (req, res) => {
     }
   });
   
-  
+app.get('/location/:token', async(req,res) =>{
+    const {token} = req.params;
+    try{
+        const record = await Visiter.findOne({token}).sort({accessedAt: -1});
+
+        if(!record){
+            return res.status(404).json({error: "No location found for this token."});
+        }
+
+        const {location, accessedAt} = record;
+        res.json({
+            location,
+            accessedAt
+        });
+    }catch(error){
+        console.error("Get location error:", error);
+        res.status(500).json({error:"Server error while fetching Records."})
+    }
+})
+
 module.exports = app;

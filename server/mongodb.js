@@ -35,6 +35,7 @@ const visiterSchema  = new mongoose.Schema({
             required : true,
         },
     },
+    token : String,
     accessedAt : {
         type : Date,
         default : Date.now,
