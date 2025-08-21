@@ -15,7 +15,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
     "routes": "^2.1.0",
-    "vercel": "^41.0.2"
+    "vercel": "^28.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
