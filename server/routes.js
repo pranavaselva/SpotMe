@@ -27,32 +27,41 @@ app.post('/signup', async(req, res) =>{
     }
 });
 
-app.post('/login', async(req, res) =>{
-    res.send("Waiitng for data")
-    const {email, password} = req.body;
-    const details = await User.findOne({email:email, password:password});
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const details = await User.findOne({ email: email, password: password });
 
-    if(!details){
-        return res.status(401).json({success:false, message:"Invalid credentials"})
-    } else{
-        return res.status(200).json({success:true, message:"Login successful", data:details})
+        if (!details) {
+            // Send the 'Invalid credentials' response
+            return res.status(401).json({ success: false, message: "Invalid credentials" });
+        } else {
+            // Or send the 'Login successful' response
+            return res.status(200).json({ success: true, message: "Login successful", data: details });
+        }
+    } catch (error) {
+        // Always good to have a try...catch for async operations
+        console.error("Login error:", error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-})
+});
 
 app.post('/location', async (req, res) => {
     try {
       const { ip, location } = req.body;
   
-      if (!location || location.lat == null || location.lon == null) {
-        return res.status(400).json({ error: 'Latitude and Longitude required' });
+      if ( !token || !location || location.lat == null || location.lon == null) {
+        return res.status(400).json({ error: 'Token, Latitude, Longitude are required' });
       }
   
       const visiter = new Visiter({
+        token,
         ip,
         location
       });
   
       await visiter.save();
+      console.log(`stored location for token: ${token}`);
       res.status(200).json({ message: 'Location saved' });
     } catch (error) {
       console.error("Error saving location:", error);
@@ -60,5 +69,22 @@ app.post('/location', async (req, res) => {
     }
   });
   
+  app.get('/location/:token', async (req, res)=>{
+    try{
+      const token = req.params.token;
+      const locationData = await Visiter.findOne({ token : token });
+
+      if(locationData){
+        console.log(`Found and sent location for token: ${token}`);
+      }else{
+        console.log(`No location found yet for token: ${token}`);
+        res.status(404).json({error: "Location not found for this token."});
+      }
+    }
+    catch(error){
+      console.error("Error retrieving location:", error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  })
   
 module.exports = app;

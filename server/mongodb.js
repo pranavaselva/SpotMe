@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
 })
 
 const visiterSchema  = new mongoose.Schema({
+    token :{
+        type : String,
+        required : true,
+        unique : true,
+    },
     ip : {
         type : String,
         required : true,
