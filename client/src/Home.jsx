@@ -26,7 +26,7 @@ function Home() {
 
     intervalRef.current = setInterval(() => {
       axios
-        .get(`http://localhost:3000/location/${token}`)
+        .get(`https://spotme-z1of.onrender.com/location/${token}`)
         .then((res) => {
           setLocation(res.data);
           setIsSearching(false); // <-- Stop searching on success
