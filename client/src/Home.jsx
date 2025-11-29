@@ -103,7 +103,7 @@ function Home() {
         <div className="absolute inset-0 border-2 border-green-500 rounded-full animate-ping-slow"></div>
         <div className="absolute inset-0 border border-green-600 rounded-full"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-[2px] h-[144px] bg-green-400 origin-bottom animate-spin-sweep translate-y-[-70px]"></div>
+        <div className="w-[2px] h-[144px] bg-green-400 origin-bottom animate-spin-sweep translate-y-[-70px]"></div>
         </div>
         <div className="absolute top-[25%] left-[60%] w-2 h-2 bg-green-400 rounded-full shadow-[0_0_8px_3px_rgba(34,197,94,0.7)] animate-pulse"></div>
         <div className="absolute top-[60%] left-[35%] w-2 h-2 bg-green-400 rounded-full shadow-[0_0_8px_3px_rgba(34,197,94,0.7)] animate-pulse delay-500"></div>
