@@ -14,12 +14,21 @@ function Login() {
       email:email,
       password:password
     })
-    .then(()=>{
-      navigate('/home')
+    .then((result)=>{
+      console.log(result);
+      if(result.data.message === "Login successful"){
+        navigate('/home');
+      }
     })
     .catch((err) =>{
       console.error("Login failed:", err);
-      alert("Login failed. Please check your credentials and try again.");
+      if (err.response) {
+        alert(`Login Failed: ${err.response.data.message}`); 
+      } else if (err.request) {
+        alert("Network Error: Could not reach the server.");
+      } else {
+        alert("An error occurred during login.");
+      }
     })
 
   };
