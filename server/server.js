@@ -9,7 +9,9 @@ dotenv.config()  // Load environment variables here, ensures it’s available ev
 
 const app = express()
 
-app.use(cors())
+app.use(cors(
+   
+))
 app.use(express.json())
 app.use("/",routes)
 
