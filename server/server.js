@@ -18,7 +18,7 @@ app.use("/",routes)
 
 
 app.get('/', (req, res) => {
-    res.send("hello")
+    res.send("backend is running")
 })
 
 dataBaseConnection();  // Connect to MongoDB

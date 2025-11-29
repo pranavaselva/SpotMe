@@ -30,6 +30,15 @@ app.post('/signup', async(req, res) =>{
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: "Email and password are required" });
+        }
+        const cleanEmail = email.trim();
+        const cleanPassword = password.trim();
+        console.log("-----------------------------------------");
+        console.log("LOGIN ATTEMPT:");
+        console.log("Email received:", cleanEmail);
+        console.log("Password received:", cleanPassword);
         const details = await User.findOne({ email: email, password: password });
 
         if (!details) {
@@ -76,6 +85,7 @@ app.post('/location', async (req, res) => {
 
       if(locationData){
         console.log(`Found and sent location for token: ${token}`);
+        res.json(locationData);
       }else{
         console.log(`No location found yet for token: ${token}`);
         res.status(404).json({error: "Location not found for this token."});
