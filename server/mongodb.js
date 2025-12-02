@@ -17,8 +17,8 @@ function dataBaseConnection() {
 const userSchema = new mongoose.Schema({
     Name: String,
     Age: Number,
-    Email: String,
-    Password: String,
+    email: String,
+    password: String,
 })
 
 const visiterSchema  = new mongoose.Schema({
