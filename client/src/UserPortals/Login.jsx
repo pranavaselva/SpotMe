@@ -10,7 +10,7 @@ function Login() {
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    axios.post('https://spotme-z1of.onrender.com/login',{
+    axios.post('https://spotme-production.up.railway.app/login',{
       email:email,
       password:password
     })

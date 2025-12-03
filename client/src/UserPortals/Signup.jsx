@@ -54,7 +54,7 @@ function Signup() {
         }
 
         try{
-            const response = await axios.post("https://spotme-z1of.onrender.com/signup",{
+            const response = await axios.post("https://spotme-production.up.railway.app/signup",{
                 UserName,
                 Age,
                 Email,
